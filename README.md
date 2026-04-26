@@ -36,6 +36,11 @@ Each decision has consequences.
 
 ## ⚙️ Features
 
+### 📜 Timeline System
+
+* Full history of your startup journey
+* Weekly events, decisions, and outcomes
+* Visual progression like a founder story
 
 ### 👥 Team Management
 
