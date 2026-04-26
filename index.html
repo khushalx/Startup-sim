@@ -137,7 +137,7 @@
               <button type="button" data-view="team">Team</button>
               <button type="button" data-view="product">Product</button>
               <button type="button" data-view="market">Market</button>
-              <button type="button" data-view="timeline">Achievements</button>
+              <button type="button" data-view="achievements">Achievements</button>
             </nav>
 
             <section class="profile-card" aria-label="Startup profile">
@@ -191,6 +191,13 @@
                   <span id="insightText">Choose your first move. Every option has a cost.</span>
                 </div>
                 <div id="decisionButtons" class="decision-list"></div>
+                <section id="decisionResultPanel" class="decision-result-panel is-hidden" aria-live="polite">
+                  <p class="eyebrow">Decision result</p>
+                  <h3 id="decisionResultTitle">Action resolved</h3>
+                  <div id="decisionResultChanges" class="decision-result-changes"></div>
+                  <p id="decisionResultInsight"></p>
+                  <button id="continueWeekButton" type="button">Continue</button>
+                </section>
               </section>
             </div>
 
@@ -317,6 +324,18 @@
                 </article>
               </section>
 
+              <section class="monetization-summary" aria-label="Shared monetization summary">
+                <div>
+                  <span>Current model</span>
+                  <strong id="productMonetizationModel">Freemium</strong>
+                </div>
+                <div>
+                  <span>Price</span>
+                  <strong id="productMonetizationPrice">$9</strong>
+                </div>
+                <p id="productMonetizationNote">Balanced growth with modest conversion.</p>
+              </section>
+
               <section class="product-lab-grid">
                 <section class="product-upgrades-panel" aria-label="Product upgrades">
                   <div class="panel-heading">
@@ -347,6 +366,53 @@
                     </article>
                   </div>
                 </section>
+              </section>
+
+              <section class="product-portfolio-panel" aria-label="Product portfolio">
+                <div class="panel-heading product-portfolio-heading">
+                  <div>
+                    <span>Product portfolio</span>
+                    <p>Create products, price them, and let revenue come from real usage.</p>
+                  </div>
+                  <button id="createProductButton" type="button">Create Product</button>
+                </div>
+
+                <form id="createProductForm" class="create-product-form is-hidden">
+                  <label>
+                    Product name
+                    <input id="newProductName" name="productName" type="text" maxlength="42" placeholder="LaunchLab Pro" />
+                  </label>
+                  <label>
+                    Type
+                    <select name="productType">
+                      <option value="SaaS">SaaS</option>
+                      <option value="Tool">Tool</option>
+                      <option value="App">App</option>
+                      <option value="Service">Service</option>
+                      <option value="AI Product">AI Product</option>
+                    </select>
+                  </label>
+                  <label>
+                    Target audience
+                    <input name="targetSegment" type="text" maxlength="38" placeholder="Founders" />
+                  </label>
+                  <label>
+                    Pricing model
+                    <select name="pricingModel">
+                      <option value="freemium">Freemium</option>
+                      <option value="free">Free</option>
+                      <option value="subscription">Subscription</option>
+                      <option value="oneTime">One-time purchase</option>
+                      <option value="enterprise">Enterprise</option>
+                    </select>
+                  </label>
+                  <div class="create-product-actions">
+                    <button type="submit">Create</button>
+                    <button id="cancelProductButton" type="button">Cancel</button>
+                  </div>
+                </form>
+
+                <div id="productPortfolioList" class="product-portfolio-list"></div>
               </section>
             </section>
 
@@ -391,6 +457,18 @@
                   <strong id="marketPressureStat">35</strong>
                   <div class="meter"><span id="marketPressureBar"></span></div>
                 </article>
+              </section>
+
+              <section class="monetization-summary" aria-label="Market monetization summary">
+                <div>
+                  <span>Current model</span>
+                  <strong id="marketMonetizationModel">Freemium</strong>
+                </div>
+                <div>
+                  <span>Price</span>
+                  <strong id="marketMonetizationPrice">$9</strong>
+                </div>
+                <p id="marketMonetizationNote">Balanced growth with modest conversion.</p>
               </section>
 
               <section class="market-strategy-grid" aria-label="Market strategy controls">
@@ -448,6 +526,66 @@
               </section>
             </section>
 
+            <section id="achievementsView" class="achievements-view is-hidden" aria-labelledby="achievementsViewTitle">
+              <header class="achievements-view-header">
+                <div>
+                  <p class="eyebrow">Achievements tab</p>
+                  <h2 id="achievementsViewTitle">Founder Trophy Case</h2>
+                  <span id="achievementRankLine">Rookie Founder progression file.</span>
+                </div>
+                <strong id="achievementRankBadge">Rookie Founder</strong>
+              </header>
+
+              <section class="achievement-overview-grid" aria-label="Achievement overview">
+                <article>
+                  <span>Unlocked</span>
+                  <strong id="achievementsUnlockedStat">0</strong>
+                </article>
+                <article>
+                  <span>Total</span>
+                  <strong id="achievementsTotalStat">0</strong>
+                </article>
+                <article>
+                  <span>Completion</span>
+                  <strong id="achievementsCompletionStat">0%</strong>
+                  <div class="meter"><span id="achievementsCompletionBar"></span></div>
+                </article>
+                <article>
+                  <span>This run</span>
+                  <strong id="achievementsRunStat">0</strong>
+                </article>
+              </section>
+
+              <section class="achievement-controls" aria-label="Achievement filters">
+                <div id="achievementCategoryFilters" class="achievement-filter-group">
+                  <button class="active" type="button" data-achievement-category="all">All</button>
+                  <button type="button" data-achievement-category="growth">Growth</button>
+                  <button type="button" data-achievement-category="revenue">Revenue</button>
+                  <button type="button" data-achievement-category="survival">Survival</button>
+                  <button type="button" data-achievement-category="product">Product</button>
+                  <button type="button" data-achievement-category="team">Team</button>
+                  <button type="button" data-achievement-category="market">Market</button>
+                  <button type="button" data-achievement-category="investors">Investors</button>
+                  <button type="button" data-achievement-category="failure">Failure</button>
+                  <button type="button" data-achievement-category="special">Special</button>
+                </div>
+                <div id="achievementRarityFilters" class="achievement-filter-group">
+                  <button class="active" type="button" data-achievement-rarity="all">All rarity</button>
+                  <button type="button" data-achievement-rarity="common">Common</button>
+                  <button type="button" data-achievement-rarity="rare">Rare</button>
+                  <button type="button" data-achievement-rarity="epic">Epic</button>
+                  <button type="button" data-achievement-rarity="legendary">Legendary</button>
+                </div>
+                <div id="achievementStatusFilters" class="achievement-filter-group">
+                  <button class="active" type="button" data-achievement-status="all">All status</button>
+                  <button type="button" data-achievement-status="unlocked">Unlocked</button>
+                  <button type="button" data-achievement-status="locked">Locked</button>
+                </div>
+              </section>
+
+              <div id="achievementGrid" class="achievement-grid" aria-live="polite"></div>
+            </section>
+
           </main>
 
           <aside class="right-sidebar" aria-label="Status reports">
@@ -502,6 +640,7 @@
         </section>
 
         <div id="resultToast" class="result-toast is-hidden" aria-live="polite"></div>
+        <div id="achievementToast" class="achievement-toast is-hidden" aria-live="polite"></div>
       </section>
 
       <section id="endingPage" class="screen ending-screen is-hidden" aria-labelledby="endingTitle">
@@ -530,6 +669,10 @@
           <section class="key-decisions" aria-labelledby="keyDecisionsTitle">
             <h2 id="keyDecisionsTitle">Key decisions</h2>
             <ol id="keyDecisionsList"></ol>
+          </section>
+          <section class="ending-achievements" aria-labelledby="endingAchievementsTitle">
+            <h2 id="endingAchievementsTitle">Achievements this run</h2>
+            <div id="endingAchievementsList"></div>
           </section>
           <p id="endingInsight" class="ending-insight"></p>
           <div class="ending-actions">
