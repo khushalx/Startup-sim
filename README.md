@@ -87,6 +87,13 @@ Or:
 
 ---
 
+## 🎨 UI/UX
+
+* Game-style interface (not a dashboard)
+* Timeline-first experience
+* Dark mode + Light mode
+* Minimal glass UI (only for command module)
+* Clean, solid, premium design
 
 ---
 
