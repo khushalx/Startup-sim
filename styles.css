@@ -929,6 +929,48 @@ select:focus {
   background: var(--paper-2);
 }
 
+.decision-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+.decision-result-panel {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+  border: 1px solid var(--amber);
+  border-radius: 16px;
+  padding: 13px;
+  background: var(--paper);
+  animation: slide-in 220ms ease both;
+}
+
+.decision-result-panel h3,
+.decision-result-panel p {
+  margin: 0;
+}
+
+.decision-result-changes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.decision-result-panel > p:not(.eyebrow) {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.decision-result-panel button {
+  justify-self: start;
+  border: 1px solid var(--amber);
+  border-radius: 12px;
+  padding: 10px 13px;
+  background: var(--paper-3);
+  color: var(--amber);
+  font-weight: 900;
+}
+
 .timeline-view {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
@@ -1138,7 +1180,8 @@ select:focus {
 
 .team-view,
 .product-view,
-.market-view {
+.market-view,
+.achievements-view {
   display: grid;
   grid-template-rows: auto auto auto minmax(0, 1fr);
   gap: 14px;
@@ -1148,26 +1191,63 @@ select:focus {
 .team-view-header,
 .product-view-header,
 .market-view-header,
+.achievements-view-header,
 .team-overview-grid article,
 .product-overview-grid article,
 .market-overview-grid article,
+.achievement-overview-grid article,
 .team-impact-panel,
 .team-roles-panel,
 .team-role-row,
+.monetization-summary,
 .product-upgrades-panel,
 .roadmap-panel,
 .product-upgrade-card,
+.product-portfolio-panel,
+.product-entity-card,
 .market-choice-panel,
 .market-actions-panel,
 .market-report-panel,
-.market-action-card {
+.market-action-card,
+.achievement-controls,
+.achievement-card,
+.achievement-empty {
   border: 1px solid var(--line);
   background: var(--paper);
 }
 
+.monetization-summary {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.35fr) minmax(100px, 0.25fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.monetization-summary span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.monetization-summary strong {
+  font-size: 1rem;
+}
+
+.monetization-summary p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 .team-view-header,
 .product-view-header,
-.market-view-header {
+.market-view-header,
+.achievements-view-header {
   display: flex;
   justify-content: space-between;
   gap: 14px;
@@ -1178,20 +1258,23 @@ select:focus {
 
 .team-view-header h2,
 .product-view-header h2,
-.market-view-header h2 {
+.market-view-header h2,
+.achievements-view-header h2 {
   margin: 0 0 6px;
   font-size: clamp(1.35rem, 3vw, 2rem);
 }
 
 .team-view-header span,
 .product-view-header span,
-.market-view-header span {
+.market-view-header span,
+.achievements-view-header span {
   color: var(--muted);
 }
 
 .team-overview-grid,
 .product-overview-grid,
-.market-overview-grid {
+.market-overview-grid,
+.achievement-overview-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
@@ -1207,7 +1290,8 @@ select:focus {
 
 .team-overview-grid article,
 .product-overview-grid article,
-.market-overview-grid article {
+.market-overview-grid article,
+.achievement-overview-grid article {
   border-radius: 14px;
   padding: 12px;
 }
@@ -1215,6 +1299,7 @@ select:focus {
 .team-overview-grid span,
 .product-overview-grid span,
 .market-overview-grid span,
+.achievement-overview-grid span,
 .team-impact-panel span {
   display: block;
   margin-bottom: 8px;
@@ -1242,8 +1327,15 @@ select:focus {
   font-size: 1.05rem;
 }
 
+.achievement-overview-grid strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.15rem;
+}
+
 .product-view-header > strong,
-.market-view-header > strong {
+.market-view-header > strong,
+.achievements-view-header > strong {
   border: 1px solid var(--line-strong);
   border-radius: 999px;
   padding: 7px 11px;
@@ -1273,11 +1365,318 @@ select:focus {
   color: var(--mint);
 }
 
+.achievement-controls {
+  display: grid;
+  gap: 10px;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.achievement-filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.achievement-filter-group button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: var(--paper-3);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.achievement-filter-group button.active {
+  border-color: var(--amber);
+  color: var(--ink);
+  background: var(--paper-2);
+}
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+  min-height: 0;
+  max-height: calc(100vh - 430px);
+  overflow: auto;
+}
+
+.achievement-card {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 12px;
+  border-radius: 16px;
+  padding: 13px;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.achievement-card.unlocked {
+  border-color: var(--line-strong);
+}
+
+.achievement-card.locked {
+  opacity: 0.58;
+}
+
+.achievement-card:hover {
+  transform: translateY(-2px);
+}
+
+.achievement-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--paper-3);
+  color: var(--amber);
+  font-weight: 900;
+}
+
+.achievement-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.achievement-card-top span,
+.achievement-card-top mark,
+.achievement-card small {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.achievement-card-top span {
+  color: var(--amber);
+}
+
+.achievement-card-top mark {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 2px 7px;
+  background: var(--paper-3);
+  color: var(--ink);
+}
+
+.achievement-card h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.achievement-card p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.achievement-card small {
+  color: var(--muted);
+}
+
+.rarity-common {
+  --rarity-color: var(--mint);
+}
+
+.rarity-rare {
+  --rarity-color: var(--blue);
+}
+
+.rarity-epic {
+  --rarity-color: var(--amber);
+}
+
+.rarity-legendary {
+  --rarity-color: #ff8a4c;
+}
+
+.achievement-card.unlocked,
+.achievement-toast,
+.ending-achievement-pill {
+  border-color: var(--rarity-color);
+}
+
+.achievement-card.unlocked .achievement-icon,
+.achievement-card.unlocked .achievement-card-top mark,
+.achievement-toast strong,
+.ending-achievement-pill {
+  color: var(--rarity-color);
+}
+
+.achievement-empty {
+  grid-column: 1 / -1;
+  border-radius: 16px;
+  padding: 24px;
+  color: var(--muted);
+  text-align: center;
+}
+
 .product-lab-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
   gap: 14px;
   min-height: 0;
+}
+
+.product-portfolio-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.product-portfolio-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.product-portfolio-heading button,
+.create-product-actions button,
+.product-entity-actions button {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: var(--paper-3);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.product-portfolio-heading button {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.create-product-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: 10px;
+  align-items: end;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  background: var(--paper-2);
+}
+
+.create-product-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.create-product-form input,
+.create-product-form select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 10px;
+  background: var(--paper-3);
+  color: var(--ink);
+}
+
+.create-product-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.product-portfolio-list,
+.product-entity-card {
+  display: grid;
+  gap: 12px;
+}
+
+.product-entity-card {
+  border-radius: 16px;
+  padding: 13px;
+}
+
+.product-entity-card.paused {
+  opacity: 0.62;
+}
+
+.product-entity-top,
+.product-entity-stats,
+.product-entity-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.product-entity-top span,
+.product-entity-top mark,
+.product-entity-stats span,
+.product-entity-bars label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.product-entity-top h3 {
+  margin: 3px 0 0;
+  font-size: 1.05rem;
+}
+
+.product-entity-top mark {
+  align-self: start;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: var(--paper-3);
+  color: var(--mint);
+}
+
+.product-entity-stats {
+  justify-content: flex-start;
+}
+
+.product-entity-stats span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 8px;
+  background: var(--paper-3);
+}
+
+.product-entity-stats b {
+  color: var(--ink);
+}
+
+.product-entity-stats .price-fair b {
+  color: var(--mint);
+}
+
+.product-entity-stats .price-expensive b {
+  color: var(--amber);
+}
+
+.product-entity-stats .price-too-expensive b {
+  color: var(--rose);
+}
+
+.product-entity-bars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.product-entity-bars label {
+  display: grid;
+  gap: 5px;
+}
+
+.product-entity-bars i {
+  color: var(--ink);
+  font-style: normal;
 }
 
 .market-strategy-grid {
@@ -1295,6 +1694,7 @@ select:focus {
 
 .product-upgrades-panel,
 .roadmap-panel,
+.product-portfolio-panel,
 .market-choice-panel,
 .market-actions-panel,
 .market-report-panel {
@@ -1376,6 +1776,12 @@ select:focus {
   background: var(--paper-3);
   color: var(--mint);
   font-weight: 900;
+}
+
+.product-upgrade-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: var(--muted);
 }
 
 .market-choice {
@@ -1470,6 +1876,26 @@ select:focus {
   padding-left: 18px;
   color: var(--muted);
   font-size: 0.86rem;
+}
+
+.roadmap-columns li strong,
+.roadmap-columns li small {
+  display: block;
+}
+
+.roadmap-progress {
+  height: 7px;
+  margin: 6px 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--paper);
+}
+
+.roadmap-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--mint);
 }
 
 .team-impact-panel {
@@ -1670,6 +2096,34 @@ select:focus {
   border-color: var(--amber);
 }
 
+.achievement-toast {
+  position: fixed;
+  right: 18px;
+  bottom: 84px;
+  z-index: 35;
+  display: grid;
+  gap: 3px;
+  min-width: min(320px, calc(100% - 36px));
+  border: 1px solid var(--amber);
+  border-radius: 16px;
+  padding: 13px 15px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  animation: achievement-unlock 320ms ease both;
+}
+
+.achievement-toast span,
+.achievement-toast small {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.achievement-toast strong {
+  font-size: 1.02rem;
+}
+
 .ending-screen {
   display: grid;
   place-items: center;
@@ -1783,6 +2237,39 @@ select:focus {
   font-size: 0.86rem;
 }
 
+.ending-achievements {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 18px;
+  background: var(--paper-2);
+}
+
+.ending-achievements h2 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.ending-achievements p {
+  margin: 0 0 10px;
+  color: var(--muted);
+}
+
+.ending-achievements div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ending-achievement-pill {
+  border: 1px solid var(--rarity-color);
+  border-radius: 999px;
+  padding: 6px 9px;
+  background: var(--paper-3);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
 .ending-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1797,6 +2284,48 @@ select:focus {
   color: var(--rose);
 }
 
+.delta-positive,
+.delta-negative,
+.delta-neutral {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 2px 7px;
+  background: var(--paper-3);
+  font-weight: 900;
+  animation: delta-pop 220ms ease both;
+}
+
+.delta-positive {
+  color: var(--mint);
+}
+
+.delta-negative {
+  color: var(--rose);
+}
+
+.delta-neutral {
+  color: var(--muted);
+}
+
+.money-change i,
+.delta-positive i,
+.delta-negative i,
+.delta-neutral i {
+  font-style: normal;
+  line-height: 1;
+}
+
+.money-in {
+  box-shadow: 0 0 0 1px rgba(84, 209, 138, 0.12);
+}
+
+.money-out {
+  box-shadow: 0 0 0 1px rgba(238, 111, 115, 0.12);
+}
+
 @keyframes slide-in {
   from {
     opacity: 0;
@@ -1808,6 +2337,17 @@ select:focus {
   }
 }
 
+@keyframes delta-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes toast-pop {
   from {
     opacity: 0;
@@ -1816,6 +2356,17 @@ select:focus {
   to {
     opacity: 1;
     transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes achievement-unlock {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -1923,9 +2474,13 @@ select:focus {
 
   .team-overview-grid,
   .team-impact-panel,
+  .monetization-summary,
   .product-overview-grid,
   .product-lab-grid,
+  .create-product-form,
+  .product-entity-bars,
   .market-overview-grid,
+  .achievement-overview-grid,
   .market-strategy-grid,
   .market-lab-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1992,13 +2547,18 @@ select:focus {
   .timeline-summary-grid,
   .team-overview-grid,
   .team-impact-panel,
+  .monetization-summary,
   .product-overview-grid,
   .product-lab-grid,
+  .create-product-form,
+  .product-entity-bars,
   .market-overview-grid,
+  .achievement-overview-grid,
   .market-strategy-grid,
   .market-lab-grid,
   .product-upgrade-card,
-  .market-action-card {
+  .market-action-card,
+  .achievement-card {
     grid-template-columns: 1fr;
   }
 
