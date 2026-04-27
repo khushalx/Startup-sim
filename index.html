@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LaunchLab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -78,6 +81,8 @@
             <h1 id="companyName">LaunchLab</h1>
             <p id="companyContext" class="context-line"></p>
           </div>
+          <input id="mobileStatsToggle" class="mobile-stats-toggle" type="checkbox" aria-label="Show more stats" />
+          <label class="mobile-more-stats" for="mobileStatsToggle">▼ More Stats</label>
           <section class="stats-bar" aria-label="Current startup stats">
             <article class="stat-pill week-pill">
               <span>Week</span>
@@ -117,6 +122,9 @@
             </article>
           </section>
           <button id="themeButton" class="icon-button" type="button" aria-pressed="false">Light</button>
+          <button id="howToPlayButton" class="icon-button" type="button">How to Play</button>
+          <button id="saveRunButton" class="icon-button" type="button">Save Run</button>
+          <button id="newRunButton" class="icon-button" type="button">New Run</button>
           <button id="muteButton" class="icon-button" type="button" aria-pressed="false">Sound on</button>
           <button id="restartButton" class="ghost-button" type="button">Restart</button>
         </header>
@@ -133,10 +141,11 @@
 
             <nav class="dossier-nav" aria-label="Dossier sections">
               <button class="active" type="button" data-view="overview">Overview</button>
+              <button type="button" data-view="product">Product</button>
               <button type="button" data-view="timeline">Timeline</button>
               <button type="button" data-view="team">Team</button>
-              <button type="button" data-view="product">Product</button>
               <button type="button" data-view="market">Market</button>
+              <button type="button" data-view="runs">Runs</button>
               <button type="button" data-view="achievements">Achievements</button>
             </nav>
 
@@ -565,7 +574,6 @@
                   <button type="button" data-achievement-category="product">Product</button>
                   <button type="button" data-achievement-category="team">Team</button>
                   <button type="button" data-achievement-category="market">Market</button>
-                  <button type="button" data-achievement-category="investors">Investors</button>
                   <button type="button" data-achievement-category="failure">Failure</button>
                   <button type="button" data-achievement-category="special">Special</button>
                 </div>
@@ -584,6 +592,39 @@
               </section>
 
               <div id="achievementGrid" class="achievement-grid" aria-live="polite"></div>
+            </section>
+
+            <section id="runsView" class="runs-view is-hidden" aria-labelledby="runsViewTitle">
+              <header class="runs-view-header">
+                <div>
+                  <p class="eyebrow">Runs tab</p>
+                  <h2 id="runsViewTitle">Founder Archive</h2>
+                  <span id="runsArchiveLine">Saved startup runs and performance records.</span>
+                </div>
+                <strong id="runsArchiveCount">0 runs</strong>
+              </header>
+
+              <section id="bestRunsPanel" class="best-runs-grid" aria-label="Best performance"></section>
+
+              <section class="run-compare-panel" aria-label="Compare runs">
+                <div class="panel-heading">
+                  <span>Compare runs</span>
+                  <p>Select two saved runs to compare core outcomes.</p>
+                </div>
+                <div class="run-compare-controls">
+                  <select id="compareRunA" aria-label="First run to compare"></select>
+                  <select id="compareRunB" aria-label="Second run to compare"></select>
+                </div>
+                <div id="runCompareResult" class="run-compare-result"></div>
+              </section>
+
+              <section class="run-history-panel" aria-label="Saved runs">
+                <div class="panel-heading">
+                  <span>Saved runs</span>
+                  <p>Archive, compare, delete, or restart from a previous setup.</p>
+                </div>
+                <div id="runHistoryList" class="run-history-list"></div>
+              </section>
             </section>
 
           </main>
@@ -675,13 +716,48 @@
             <div id="endingAchievementsList"></div>
           </section>
           <p id="endingInsight" class="ending-insight"></p>
+          <p id="endingScoreComparison" class="ending-insight"></p>
           <div class="ending-actions">
+            <button id="saveStartNewRunButton" class="primary-button" type="button">Save & Start New Run</button>
+            <button id="viewRunHistoryButton" class="ghost-button" type="button">View Run History</button>
             <button id="playAgainButton" class="primary-button" type="button">Restart</button>
             <button id="tryStrategyButton" class="ghost-button" type="button">Try different strategy</button>
           </div>
         </article>
       </section>
     </main>
+
+    <div id="newRunOverlay" class="onboarding-overlay is-hidden" role="dialog" aria-modal="true" aria-labelledby="newRunTitle">
+      <article class="onboarding-modal">
+        <p class="eyebrow">Run control</p>
+        <h2 id="newRunTitle">Start a new run?</h2>
+        <p>Current run will be saved first, then you can configure a fresh startup from the setup screen.</p>
+        <div class="onboarding-actions">
+          <button id="confirmNewRunButton" class="primary-button" type="button">Save & Start New Run</button>
+          <button id="cancelNewRunButton" class="ghost-button" type="button">Cancel</button>
+        </div>
+      </article>
+    </div>
+
+    <div id="onboardingOverlay" class="onboarding-overlay is-hidden" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+      <article class="onboarding-modal">
+        <p class="eyebrow">Founder briefing</p>
+        <h2 id="onboardingTitle">Welcome to LaunchLab</h2>
+        <p>
+          LaunchLab is a startup simulation game where every decision changes your company across product, cash, team, market, and growth.
+        </p>
+        <ul>
+          <li>Build products, manage runway, grow users, and unlock achievements.</li>
+          <li>Hire carefully: bigger teams help execution but raise burn.</li>
+          <li>Pricing matters: high prices can reduce conversion and hurt trust.</li>
+          <li>Low runway can end the startup, while strong product and market fit improve growth.</li>
+        </ul>
+        <div class="onboarding-actions">
+          <button id="startSimulationButton" class="primary-button" type="button">Start Simulation</button>
+          <button id="dismissOnboardingButton" class="ghost-button" type="button">Don’t show again</button>
+        </div>
+      </article>
+    </div>
 
     <script src="app.js"></script>
   </body>
