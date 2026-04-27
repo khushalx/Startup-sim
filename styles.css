@@ -3,6 +3,8 @@ FROZEN JS-BOUND SELECTORS - DO NOT RENAME OR REMOVE.
 IDs: #landingPage, #simulationPage, #endingPage, #startupForm, #restartButton, #playAgainButton, #tryStrategyButton, #themeButton, #howToPlayButton, #muteButton, #onboardingOverlay, #startSimulationButton, #dismissOnboardingButton, #decisionButtons, #decisionResultPanel, #decisionResultTitle, #decisionResultChanges, #decisionResultInsight, #continueWeekButton, #historyList, #overviewView, #timelineView, #teamView, #productView, #marketView, #achievementsView, #timelineDetailList, #trajectoryLabel, #summarySurvived, #summaryBestWeek, #summaryWorstWeek, #summaryGrowthMoment, #teamStatusLine, #teamSizeStat, #teamCostStat, #teamMoraleStat, #teamEfficiencyStat, #teamMoraleBar, #teamEfficiencyBar, #teamStrongText, #teamWeakText, #teamRolesList, #teamActionMessage, #productStatusLine, #productHealthBadge, #productQualityStat, #productStabilityStat, #productUxStat, #productFeatureStat, #productDebtStat, #productQualityBar, #productStabilityBar, #productUxBar, #productFeatureBar, #productDebtBar, #productMonetizationModel, #productMonetizationPrice, #productMonetizationNote, #productUpgradeList, #productActionMessage, #roadmapBacklog, #roadmapProgress, #roadmapShipped, #createProductButton, #createProductForm, #cancelProductButton, #productPortfolioList, #marketStatusLine, #marketFitBadge, #marketSizeStat, #marketDemandStat, #marketCompetitionStat, #marketDifferentiationStat, #marketPricingPowerStat, #marketPressureStat, #marketSizeBar, #marketDemandBar, #marketCompetitionBar, #marketDifferentiationBar, #marketPricingPowerBar, #marketPressureBar, #marketMonetizationModel, #marketMonetizationPrice, #marketMonetizationNote, #segmentOptions, #positioningOptions, #pricingOptions, #marketActionList, #marketActionMessage, #marketReportText, #marketWedgeText, #marketRiskText, #achievementRankLine, #achievementRankBadge, #achievementsUnlockedStat, #achievementsTotalStat, #achievementsCompletionStat, #achievementsCompletionBar, #achievementsRunStat, #achievementCategoryFilters, #achievementRarityFilters, #achievementStatusFilters, #achievementGrid, #achievementToast, #weekNumber, #companyName, #companyContext, #usersStat, #revenueStat, #cashStat, #growthStat, #burnStat, #runwayStat, #runwayStatPill, #reputationStat, #qualityStat, #streakStat, #runwayLabel, #reputationLabel, #qualityLabel, #runwayBar, #reputationBar, #qualityBar, #scenarioTitle, #scenarioText, #eventBadge, #historyCount, #insightText, #decisionWeekLabel, #profileName, #profileType, #profileStyle, #profileGoal, #runwayWarningText, #sideGrowthLabel, #sideUsersLabel, #sideInsightText, #nextEventLabel, #nextEventBar, #resultToast, #endingEyebrow, #endingTitle, #endingReason, #summaryWeeks, #summaryPeakUsers, #summaryRevenue, #summaryScore, #endingInsight, #keyDecisionsList, #endingAchievementsList, #ideaInput.
 Classes used/toggled by JS: .dossier-nav button, .timeline-filters button, .is-hidden, .active, .ending-failure, .ending-success, .ending-unicorn, .runway-safe, .runway-warning, .runway-danger, .gain, .loss, .decision-button, .choice-positive, .choice-negative, .choice-risk, .achievement-toast, .timeline-entry, .current-entry, .timeline-empty, .timeline-detail-entry, .entry-win, .entry-loss, .entry-mixed, .latest-entry, .achievement-empty, .achievement-card, .unlocked, .locked, .bar-danger, .bar-risk, .bar-good, .team-role-row, .health-* classes, .product-upgrade-card, .product-entity-card, .paused, .fit-* classes, .market-choice, .market-action-card, .flash-positive, .flash-negative, .flash-risk, .result-toast, .result-good, .result-bad, .result-mixed.
 Data attributes consumed by JS: data-view, data-filter, data-achievement-category, data-achievement-rarity, data-achievement-status, data-action, data-role, data-upgrade, data-product-action, data-product-id, data-market-kind, data-market-key, data-market-action.
+Added run archive selectors: #saveRunButton, #newRunButton, #saveStartNewRunButton, #viewRunHistoryButton, #newRunOverlay, #confirmNewRunButton, #cancelNewRunButton, #runsView, #runsArchiveLine, #runsArchiveCount, #bestRunsPanel, #compareRunA, #compareRunB, #runCompareResult, #runHistoryList, .runs-view, .run-card, .run-actions, data-run-action, data-run-id.
+Added balance selectors: #burnSourceTotal, #burnTeamSource, #burnProductSource, #burnMarketingSource, #burnOptionalSource, #burnSourceNote, #stopMarketingButton, #pauseDevelopmentButton, #cutCostsButton.
 */
 
 :root {
@@ -96,55 +98,3 @@ button {
   grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
   gap: 28px;
   align-items: center;
-}
-
-.brand-panel,
-.setup-card {
-  border: 1px solid var(--line);
-  background: var(--paper);
-  box-shadow: var(--shadow);
-}
-
-.brand-panel {
-  min-height: 560px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 42px;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-}
-
-.brand-panel::before {
-  display: none;
-}
-
-.brand-panel > * {
-  position: relative;
-}
-
-.brand-mark {
-  position: absolute;
-  top: 42px;
-  left: 42px;
-  display: grid;
-  grid-template-columns: repeat(3, 34px);
-  gap: 10px;
-}
-
-.brand-mark span {
-  display: block;
-  width: 34px;
-  height: 94px;
-  border-radius: 4px;
-  background: var(--blue);
-}
-
-.brand-mark span:nth-child(2) {
-  height: 132px;
-  background: var(--mint);
-}
-
-.brand-mark span:nth-child(3) {
-  height: 62px;
